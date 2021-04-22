@@ -10,6 +10,25 @@ public class BDD {
         size = root.size;
     }
 
+    String BDD_use(String input) {
+        char[] inputs = new char[input.length()];
+        for (int i = 0; i < input.length(); i++) {
+            inputs[i] = input.charAt(i);
+        }
+        Node actNode = root;
+        for (char c : inputs) {
+            switch (c) {
+                case '0':
+                    actNode = actNode.left;
+                    break;
+                case '1':
+                    actNode = actNode.right;
+                    break;
+            }
+        }
+        return actNode.value;
+    }
+
     void print() {
         for (int i = root.depth; i >= 0; i--) {
             ArrayList<Node> nodes = getNodesByDepth(root, i);
