@@ -2,6 +2,6 @@ public class Main {
 
     public static void main(String[] args) {
         BDD bdd = new BDD();
-        bdd.BDD_create("11010110");
+        bdd.BDD_create("1101");
     }
 }

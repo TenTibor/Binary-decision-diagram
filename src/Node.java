@@ -1,24 +1,22 @@
 public class Node {
-    String value;
+    String value = "nothing";
     Node left = null;
     Node right = null;
-
-    public Node() {
-    }
-
-    public Node(String value) {
-        this.value = value;
-    }
+    int size = 0;
 
     public Node insertToNode(String bf) {
-        value = bf;
-        System.out.println(value);
-        if (bf.length() > 1) {
-            String[] splittedPattern = splitText(bf);
-            left = insertToNode(splittedPattern[0]);
+        Node newNode = new Node();
+        newNode.value = bf;
+        if (newNode.value.length() > 1) {
+            String[] splittedPattern = splitText(newNode.value);
+            newNode.left = insertToNode(splittedPattern[0]);
+            if (left != null) size++;
+
             right = insertToNode(splittedPattern[1]);
+            if (right != null) size++;
         }
-        return this;
+        System.out.println(newNode.value + "/" + newNode.size);
+        return newNode;
 //        System.out.println(Arrays.toString(splittedPattern));
     }
 
