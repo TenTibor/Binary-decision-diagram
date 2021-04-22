@@ -10,10 +10,10 @@ public class Node {
         if (newNode.value.length() > 1) {
             String[] splittedPattern = splitText(newNode.value);
             newNode.left = insertToNode(splittedPattern[0]);
-            if (left != null) size++;
+            if (newNode.left != null) newNode.size += newNode.left.size + 1;
 
-            right = insertToNode(splittedPattern[1]);
-            if (right != null) size++;
+            newNode.right = insertToNode(splittedPattern[1]);
+            if (newNode.right != null) newNode.size += newNode.right.size + 1;
         }
         System.out.println(newNode.value + "/" + newNode.size);
         return newNode;
