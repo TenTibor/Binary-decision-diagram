@@ -7,7 +7,7 @@ public class Main {
         // Test from zadanie
         bdd.BDD_create("01010111");
         bdd.print();
-        System.out.println("==================");
+        System.out.println("====Pocet uzlov " + bdd.size + "====");
 
         System.out.println(bdd.BDD_use("000"));
         System.out.println(bdd.BDD_use("001"));

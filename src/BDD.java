@@ -7,7 +7,7 @@ public class BDD {
 
     void BDD_create(String bf) {
         root = root.insertToNode(bf);
-        size = root.size;
+        size = root.size + 1;
     }
 
     String BDD_use(String input) {
