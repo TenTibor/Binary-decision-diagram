@@ -6,6 +6,7 @@ public class BDD {
 
     void BDD_create(String bf) {
         root = root.insertToNode(bf);
+        size = root.size;
     }
 
     void BDD_print(){
