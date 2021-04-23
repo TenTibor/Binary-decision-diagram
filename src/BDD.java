@@ -29,27 +29,30 @@ public class BDD {
     }
 
     public int reduce() {
-        Node actNode = root;
-        // Get to depth 1
-        ArrayList<Node> nodes = getNodesByDepth(root, 1);
-        for (int i = 0; i < nodes.size(); i += 2) {
-            if (nodes.get(i).left.value.equals(nodes.get(i + 1).right.value))
-                nodes.get(i + 1).right = nodes.get(i).left;
-            if (nodes.get(i).right.value.equals(nodes.get(i + 1).left.value))
-                nodes.get(i + 1).left = nodes.get(i).right;
+//        Reduce all layers
+        for (int layer = 1; layer < root.depth; layer++) {
+            ArrayList<Node> nodes = getNodesByDepth(root, layer, true);
+//            System.out.println(nodes.size());
+            for (int i = 0; i < nodes.size(); i += 2) {
+                if (nodes.get(i).left.value.equals(nodes.get(i + 1).right.value))
+                    nodes.get(i + 1).right = nodes.get(i).left;
+                if (nodes.get(i).right.value.equals(nodes.get(i + 1).left.value))
+                    nodes.get(i + 1).left = nodes.get(i).right;
+                if (nodes.get(i).left.value.equals(nodes.get(i + 1).left.value))
+                    nodes.get(i + 1).left = nodes.get(i).left;
+                if (nodes.get(i).right.value.equals(nodes.get(i + 1).right.value))
+                    nodes.get(i + 1).right = nodes.get(i).right;
+            }
         }
-//        System.out.println(nodes);
-
-//        actNode = actNode.reducedNode();
 
         return 1;
     }
 
     void print() {
         for (int i = root.depth; i >= 0; i--) {
-            ArrayList<Node> nodes = getNodesByDepth(root, i);
+            ArrayList<Node> nodes = getNodesByDepth(root, i, false);
             StringBuilder text = new StringBuilder();
-            text.append(i + ": ");
+            text.append(i).append(": ");
 
             // Append spaces
             for (int j = 0; j < i; j++)
@@ -62,16 +65,16 @@ public class BDD {
         }
     }
 
-    ArrayList<Node> getNodesByDepth(Node node, int depth) {
+    ArrayList<Node> getNodesByDepth(Node node, int depth, boolean duplicates) {
         ArrayList<Node> nodes = new ArrayList<>();
         if (node == null) return nodes;
         if (node.depth == depth) {
             nodes.add(node);
         } else {
-            nodes.addAll(getNodesByDepth(node.left, depth));
-            nodes.addAll(getNodesByDepth(node.right, depth));
+            nodes.addAll(getNodesByDepth(node.left, depth, true));
+            nodes.addAll(getNodesByDepth(node.right, depth, true));
         }
-        return removedDuplicates(nodes);
+        return duplicates ? nodes : removedDuplicates(nodes);
     }
 
     private ArrayList<Node> removedDuplicates(ArrayList<Node> nodes) {
