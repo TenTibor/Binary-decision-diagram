@@ -23,9 +23,7 @@ public class Node {
             if (newNode.right != null) newNode.depth += newNode.right.depth + 1;
             else if (newNode.left != null) newNode.depth += newNode.left.depth + 1;
         }
-//        System.out.println(newNode.value + "/" + newNode.size + "-" + newNode.depth);
         return newNode;
-//        System.out.println(Arrays.toString(splittedPattern));
     }
 
     private String[] splitText(String text) {
@@ -33,7 +31,12 @@ public class Node {
         return new String[]{text.substring(0, mid), text.substring(mid)};
     }
 
-    String getNodesTexts() {
-        return left.value + "/" + right.value;
+    public Node reducedNode() {
+        if (left == null | right == null) return this;
+        if (left.left.value.equals(right.right.value)) {
+
+        }
+
+        return this;
     }
 }
