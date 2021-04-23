@@ -2,55 +2,56 @@ import java.util.ArrayList;
 
 public class BDD {
     Node root = new Node();
-    String bf;
-    int countOfNodes = 0; // countOfNodes
     int countOfVariables = 0;
+    int countOfNodes = 0;
+    String bf;
 
     void BDD_create(String bf) {
         this.bf = bf;
         root = root.insertToNode(bf);
         countOfNodes = root.size + 1;
         countOfVariables = log2(bf.length());
+        System.out.println("Pocet premennych:" + countOfVariables);
     }
 
-    String BDD_use(String input) {
+    char BDD_use(String input) {
         char[] inputs = new char[input.length()];
         for (int i = 0; i < input.length(); i++) {
             inputs[i] = input.charAt(i);
         }
         Node actNode = root;
         for (char c : inputs) {
-            switch (c) {
-                case '0':
-                    actNode = actNode.left;
-                    break;
-                case '1':
-                    actNode = actNode.right;
-                    break;
-            }
+            if (c == '0')
+                actNode = actNode.left;
+            else if (c == '1')
+                actNode = actNode.right;
         }
-        return actNode.value;
+        return (actNode.value.equals("0") || actNode.value.equals("1")) ? actNode.value.charAt(0) : '-';
     }
 
 
     public int reduce() {
+        if (root == null) return -1;
         int newCountOfNodes = 0;
         // Reduce all layers
         for (int layer = 1; layer < root.depth; layer++) {
             ArrayList<Node> nodes = getNodesByDepth(root, layer, true);
             for (int i = 0; i < nodes.size(); i++) {
-                // Check if node have two same options
+                // Check if both nodes are same
                 if (nodes.get(i).left.value.equals(nodes.get(i).right.value)) {
                     nodes.get(i).right = nodes.get(i).left;
                 }
                 // Check nodes of this item with all others
                 for (int j = 1; i + j < nodes.size(); j++) {
+                    // Compare left node with every other
                     if (nodes.get(i).left.value.equals(nodes.get(i + j).right.value)) {
                         nodes.get(i + j).right = nodes.get(i).left;
                     }
                     if (nodes.get(i).left.value.equals(nodes.get(i + j).left.value)) {
                         nodes.get(i + j).left = nodes.get(i).left;
                     }
+
+                    // Compare right node with every other
                     if (nodes.get(i).right.value.equals(nodes.get(i + j).right.value)) {
                         nodes.get(i + j).right = nodes.get(i).right;
                     }
@@ -60,7 +61,7 @@ public class BDD {
                 }
             }
             ArrayList<Node> newNodesOnLayer = getNodesByDepth(root, layer, false);
-            System.out.println(newNodesOnLayer);
+//            System.out.println(newNodesOnLayer);
             newCountOfNodes += newNodesOnLayer.size();
         }
         int countOfRemovedNodes = this.countOfNodes - 1 - newCountOfNodes;
