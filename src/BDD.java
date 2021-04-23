@@ -35,18 +35,15 @@ public class BDD {
 
         // Reduce all layers
         for (int layer = 1; layer <= root.depth; layer++) {
-            ArrayList<Node> nodes = getNodesByDepth(root, layer, true);
+            ArrayList<Node> nodes = getNodesByDepth(root, layer, false);
             int sizeOfNodes = nodes.size();
             for (int i = 0; i < sizeOfNodes; i++) {
                 Node thisNode = nodes.get(i);
                 String thisNodeLeftValue = thisNode.left.value;
                 String thisNodeRightValue = thisNode.right.value;
-                // Check if both nodes are same
-                if (thisNode.left.value.equals(thisNode.right.value)) {
-                    thisNode.right = thisNode.left;
-                }
+
                 // Check nodes of this item with all others {TODO Fucking time consumer}
-                for (int j = 1; i + j < sizeOfNodes; j++) {
+                for (int j = 0; i + j < sizeOfNodes; j++) {
                     Node nextNode = nodes.get(i + j);
                     String nextNodeLeftValue = nextNode.left.value;
                     String nextNodeRightValue = nextNode.right.value;

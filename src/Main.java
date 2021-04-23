@@ -1,7 +1,13 @@
 public class Main {
 
     public static void main(String[] args) {
-        testManyBDDs(200, 13);
+        testManyBDDs(2000, 13);
+
+        //        BDD bdd = new BDD();
+//        bdd.BDD_create("1101");
+//        bdd.print();
+//        bdd.reduce();
+//        bdd.print();
     }
 
     public static void testManyBDDs(int count, int countOfVariables) {
@@ -32,7 +38,7 @@ public class Main {
             // check if BDD is reduced good
             if (!checkBf(bdd))
                 break;
-            else System.out.println(i + ": OK");
+            else System.out.println((i + 1) + ": OK");
         }
 
         long timeFinished = System.currentTimeMillis();
