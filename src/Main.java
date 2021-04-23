@@ -12,6 +12,7 @@ public class Main {
 
         System.out.println("============");
         int reducedNodesCount = bdd.reduce();
+        System.out.println(reducedNodesCount + " nodes was removed");
         bdd.print();
         if (checkBf(bdd)) System.out.println("You did it right <3");
 

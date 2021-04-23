@@ -34,7 +34,7 @@ public class BDD {
 
 
     public int reduce() {
-        int countOfRemovedNodes = 0;
+        int newCountOfNodes = 0;
         //        Reduce all layers
         for (int layer = 1; layer < root.depth; layer++) {
             ArrayList<Node> nodes = getNodesByDepth(root, layer, true);
@@ -42,24 +42,23 @@ public class BDD {
             for (int i = 0; i < nodes.size(); i += 2) {
                 if (nodes.get(i).left.value.equals(nodes.get(i + 1).right.value)) {
                     nodes.get(i + 1).right = nodes.get(i).left;
-                    countOfRemovedNodes++;
                 }
                 if (nodes.get(i).right.value.equals(nodes.get(i + 1).left.value)) {
                     nodes.get(i + 1).left = nodes.get(i).right;
-                    countOfRemovedNodes++;
                 }
                 if (nodes.get(i).left.value.equals(nodes.get(i + 1).left.value)) {
                     nodes.get(i + 1).left = nodes.get(i).left;
-                    countOfRemovedNodes++;
                 }
                 if (nodes.get(i).right.value.equals(nodes.get(i + 1).right.value)) {
                     nodes.get(i + 1).right = nodes.get(i).right;
-                    countOfRemovedNodes++;
                 }
             }
+            ArrayList<Node> checkNodes = getNodesByDepth(root, layer, false);
+            newCountOfNodes += checkNodes.size();
         }
-
-        return 1;
+        int countOfRemovedNodes = this.countOfNodes - 1 - newCountOfNodes;
+        this.countOfNodes = newCountOfNodes + 1;
+        return countOfRemovedNodes;
     }
 
     void print() {
