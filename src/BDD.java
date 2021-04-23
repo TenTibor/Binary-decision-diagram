@@ -38,13 +38,13 @@ public class BDD {
         // Reduce all layers
         for (int layer = 1; layer < root.depth; layer++) {
             ArrayList<Node> nodes = getNodesByDepth(root, layer, true);
-            for (int i = 0; i < nodes.size(); i += 2) {
+            for (int i = 0; i < nodes.size(); i++) {
                 // Check if node have two same options
                 if (nodes.get(i).left.value.equals(nodes.get(i).right.value)) {
                     nodes.get(i).right = nodes.get(i).left;
                 }
                 // Check nodes of this item with all others
-                for (int j = 1; i+j < nodes.size(); j++) {
+                for (int j = 1; i + j < nodes.size(); j++) {
                     if (nodes.get(i).left.value.equals(nodes.get(i + j).right.value)) {
                         nodes.get(i + j).right = nodes.get(i).left;
                     }
@@ -58,17 +58,6 @@ public class BDD {
                         nodes.get(i + j).left = nodes.get(i).right;
                     }
                 }
-
-//                if (nodes.get(i).left.value.equals(nodes.get(i + 1).right.value)) {
-//                    nodes.get(i + 1).right = nodes.get(i).left;
-//                } else if (nodes.get(i).right.value.equals(nodes.get(i + 1).right.value)) {
-//                    nodes.get(i + 1).right = nodes.get(i).right;
-//                }
-//                if (nodes.get(i).right.value.equals(nodes.get(i + 1).left.value)) {
-//                    nodes.get(i + 1).left = nodes.get(i).right;
-//                } else if (nodes.get(i).left.value.equals(nodes.get(i + 1).left.value)) {
-//                    nodes.get(i + 1).left = nodes.get(i).left;
-//                }
             }
             ArrayList<Node> newNodesOnLayer = getNodesByDepth(root, layer, false);
             System.out.println(newNodesOnLayer);
