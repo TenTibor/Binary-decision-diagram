@@ -2,11 +2,11 @@ public class Main {
 
     public static void main(String[] args) {
         testManyBDDs(2000, 13);
-
-        //        BDD bdd = new BDD();
-//        bdd.BDD_create("1101");
+//
+//        BDD bdd = new BDD();
+//        bdd.BDD_create(generateBf(4));
 //        bdd.print();
-//        bdd.reduce();
+//        System.out.println(String.valueOf(bdd.reduce()));
 //        bdd.print();
     }
 

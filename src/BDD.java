@@ -34,7 +34,7 @@ public class BDD {
         int newCountOfNodes = 1;
 
         // Reduce all layers
-        for (int layer = 1; layer <= root.depth; layer++) {
+        for (int layer = root.depth; layer > 0; layer--) {
             ArrayList<Node> nodes = getNodesByDepth(root, layer, false);
             int sizeOfNodes = nodes.size();
             for (int i = 0; i < sizeOfNodes; i++) {
@@ -42,7 +42,7 @@ public class BDD {
                 String thisNodeLeftValue = thisNode.left.value;
                 String thisNodeRightValue = thisNode.right.value;
 
-                // Check nodes of this item with all others {TODO Fucking time consumer}
+                // Check nodes of this item with all others
                 for (int j = 0; i + j < sizeOfNodes; j++) {
                     Node nextNode = nodes.get(i + j);
                     String nextNodeLeftValue = nextNode.left.value;
