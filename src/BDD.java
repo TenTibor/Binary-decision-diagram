@@ -36,27 +36,34 @@ public class BDD {
         // Reduce all layers
         for (int layer = 1; layer <= root.depth; layer++) {
             ArrayList<Node> nodes = getNodesByDepth(root, layer, true);
-            for (int i = 0; i < nodes.size(); i++) {
+            int sizeOfNodes = nodes.size();
+            for (int i = 0; i < sizeOfNodes; i++) {
+                Node thisNode = nodes.get(i);
+                String thisNodeLeftValue = thisNode.left.value;
+                String thisNodeRightValue = thisNode.right.value;
                 // Check if both nodes are same
-                if (nodes.get(i).left.value.equals(nodes.get(i).right.value)) {
-                    nodes.get(i).right = nodes.get(i).left;
+                if (thisNode.left.value.equals(thisNode.right.value)) {
+                    thisNode.right = thisNode.left;
                 }
                 // Check nodes of this item with all others {TODO Fucking time consumer}
-                for (int j = 1; i + j < nodes.size(); j++) {
+                for (int j = 1; i + j < sizeOfNodes; j++) {
+                    Node nextNode = nodes.get(i + j);
+                    String nextNodeLeftValue = nextNode.left.value;
+                    String nextNodeRightValue = nextNode.right.value;
                     // Compare left node with every other
-                    if (nodes.get(i).left.value.equals(nodes.get(i + j).right.value)) {
-                        nodes.get(i + j).right = nodes.get(i).left;
+                    if (thisNodeLeftValue.equals(nextNodeRightValue)) {
+                        nextNode.right = thisNode.left;
                     }
-                    if (nodes.get(i).left.value.equals(nodes.get(i + j).left.value)) {
-                        nodes.get(i + j).left = nodes.get(i).left;
+                    if (thisNodeLeftValue.equals(nextNodeLeftValue)) {
+                        nextNode.left = thisNode.left;
                     }
 
                     // Compare right node with every other
-                    if (nodes.get(i).right.value.equals(nodes.get(i + j).right.value)) {
-                        nodes.get(i + j).right = nodes.get(i).right;
+                    if (thisNodeRightValue.equals(nextNodeRightValue)) {
+                        nextNode.right = thisNode.right;
                     }
-                    if (nodes.get(i).right.value.equals(nodes.get(i + j).left.value)) {
-                        nodes.get(i + j).left = nodes.get(i).right;
+                    if (thisNodeRightValue.equals(nextNodeLeftValue)) {
+                        nextNode.left = thisNode.right;
                     }
                 }
             }

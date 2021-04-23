@@ -32,7 +32,7 @@ public class Main {
             // check if BDD is reduced good
             if (!checkBf(bdd))
                 break;
-            else System.out.println("OK");
+            else System.out.println(i + ": OK");
         }
 
         long timeFinished = System.currentTimeMillis();
