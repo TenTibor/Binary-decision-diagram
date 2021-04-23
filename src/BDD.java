@@ -2,11 +2,13 @@ import java.util.ArrayList;
 
 public class BDD {
     Node root = new Node();
-    int size = 0; // countOfNodes
+    int countOfNodes = 0; // countOfNodes
+    int countOfVariables = 0;
 
     void BDD_create(String bf) {
         root = root.insertToNode(bf);
-        size = root.size + 1;
+        countOfNodes = root.size + 1;
+        countOfVariables = log2(bf.length());
     }
 
     String BDD_use(String input) {
@@ -27,6 +29,7 @@ public class BDD {
         }
         return actNode.value;
     }
+
 
     public int reduce() {
 //        Reduce all layers
@@ -83,5 +86,9 @@ public class BDD {
             if (!newNodes.contains(thisNode)) newNodes.add(thisNode);
         }
         return newNodes;
+    }
+
+    public static int log2(int x) {
+        return (int) (Math.log(x) / Math.log(2));
     }
 }
