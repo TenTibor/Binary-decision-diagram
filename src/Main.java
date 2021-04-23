@@ -7,28 +7,28 @@ public class Main {
         String bf = "01101001";
         bdd.BDD_create(bf);
         bdd.print();
-        System.out.println("====Pocet uzlov " + bdd.countOfNodes + "====");
 
-        // change num to binary shit
-        // always same string size
-//
-
+        if (checkBf(bdd)) System.out.println("You did it right <3");
 
         System.out.println("============");
         int reducedNodesCount = bdd.reduce();
         bdd.print();
+        if (checkBf(bdd)) System.out.println("You did it right <3");
 
     }
 
-    public boolean checkBf(BDD bdd, String bf){
-        System.out.println(bdd.BDD_use("000"));
-        System.out.println(bdd.BDD_use("001"));
-        System.out.println(bdd.BDD_use("010"));
-        System.out.println(bdd.BDD_use("011"));
-        System.out.println(bdd.BDD_use("100"));
-        System.out.println(bdd.BDD_use("101"));
-        System.out.println(bdd.BDD_use("110"));
-        System.out.println(bdd.BDD_use("111"));
-        return true;
+    public static boolean checkBf(BDD bdd) {
+        StringBuilder generatedBf = new StringBuilder();
+
+        // Check all options to use
+        for (int i = 0; i < bdd.bf.length(); i++) {
+            StringBuilder inputToUse = new StringBuilder();
+            inputToUse.append(Integer.toBinaryString(i));
+            while (inputToUse.length() < bdd.countOfVariables) {
+                inputToUse.insert(0, "0");
+            }
+            generatedBf.append(bdd.BDD_use(String.valueOf(inputToUse)));
+        }
+        return bdd.bf.equals(String.valueOf(generatedBf));
     }
 }

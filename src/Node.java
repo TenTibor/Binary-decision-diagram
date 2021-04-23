@@ -30,13 +30,4 @@ public class Node {
         int mid = text.length() / 2;
         return new String[]{text.substring(0, mid), text.substring(mid)};
     }
-
-    public Node reducedNode() {
-        if (left == null | right == null) return this;
-        if (left.left.value.equals(right.right.value)) {
-
-        }
-
-        return this;
-    }
 }

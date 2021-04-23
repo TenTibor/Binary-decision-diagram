@@ -2,10 +2,12 @@ import java.util.ArrayList;
 
 public class BDD {
     Node root = new Node();
+    String bf;
     int countOfNodes = 0; // countOfNodes
     int countOfVariables = 0;
 
     void BDD_create(String bf) {
+        this.bf = bf;
         root = root.insertToNode(bf);
         countOfNodes = root.size + 1;
         countOfVariables = log2(bf.length());
@@ -32,19 +34,28 @@ public class BDD {
 
 
     public int reduce() {
-//        Reduce all layers
+        int countOfRemovedNodes = 0;
+        //        Reduce all layers
         for (int layer = 1; layer < root.depth; layer++) {
             ArrayList<Node> nodes = getNodesByDepth(root, layer, true);
 //            System.out.println(nodes.size());
             for (int i = 0; i < nodes.size(); i += 2) {
-                if (nodes.get(i).left.value.equals(nodes.get(i + 1).right.value))
+                if (nodes.get(i).left.value.equals(nodes.get(i + 1).right.value)) {
                     nodes.get(i + 1).right = nodes.get(i).left;
-                if (nodes.get(i).right.value.equals(nodes.get(i + 1).left.value))
+                    countOfRemovedNodes++;
+                }
+                if (nodes.get(i).right.value.equals(nodes.get(i + 1).left.value)) {
                     nodes.get(i + 1).left = nodes.get(i).right;
-                if (nodes.get(i).left.value.equals(nodes.get(i + 1).left.value))
+                    countOfRemovedNodes++;
+                }
+                if (nodes.get(i).left.value.equals(nodes.get(i + 1).left.value)) {
                     nodes.get(i + 1).left = nodes.get(i).left;
-                if (nodes.get(i).right.value.equals(nodes.get(i + 1).right.value))
+                    countOfRemovedNodes++;
+                }
+                if (nodes.get(i).right.value.equals(nodes.get(i + 1).right.value)) {
                     nodes.get(i + 1).right = nodes.get(i).right;
+                    countOfRemovedNodes++;
+                }
             }
         }
 
@@ -66,6 +77,7 @@ public class BDD {
             }
             System.out.println(text);
         }
+        System.out.println("=======Pocet uzlov " + this.countOfNodes + "=======");
     }
 
     ArrayList<Node> getNodesByDepth(Node node, int depth, boolean duplicates) {
