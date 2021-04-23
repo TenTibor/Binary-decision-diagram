@@ -4,17 +4,22 @@ public class Main {
         BDD bdd = new BDD();
 
         // Test from zadanie
-        String bf = "01101001";
+        String bf = "1011101101000100"; //works
+//        String bf = "11111101"; //works
+//        String bf = "01101001"; // Works
         bdd.BDD_create(bf);
         bdd.print();
 
-        if (checkBf(bdd)) System.out.println("You did it right <3");
+        if (checkBf(bdd)) System.out.println("PASSED");
+        else System.out.println("SHTFCK");
 
-        System.out.println("============");
+        System.out.println("=======");
         int reducedNodesCount = bdd.reduce();
         System.out.println(reducedNodesCount + " nodes was removed");
         bdd.print();
-        if (checkBf(bdd)) System.out.println("You did it right <3");
+
+        if (checkBf(bdd)) System.out.println("PASSED");
+        else System.out.println("SHTFCK");
 
     }
 
