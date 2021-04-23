@@ -1,5 +1,5 @@
 public class Node {
-    String value = "nothing";
+    String value = "";
     Node left = null;
     Node right = null;
     int size = 0;

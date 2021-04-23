@@ -1,30 +1,48 @@
 public class Main {
 
     public static void main(String[] args) {
-        BDD bdd = new BDD();
-
-        // Test from zadanie
-        String bf = generateBf(13);
-        bdd.BDD_create(bf);
-        bdd.print();
-
-        if (checkBf(bdd)) System.out.println("PASSED");
-        else System.out.println("SHTFCK");
-
-        // Reduce node
-        System.out.println("=======");
-        int reducedNodesCount;
-        if ((reducedNodesCount = bdd.reduce()) == -1)
-            System.out.println("Something went wrong with reducent");
-        else
-            System.out.println(reducedNodesCount + " nodes was removed");
-
-        bdd.print();
-
-        if (checkBf(bdd)) System.out.println("PASSED");
-        else System.out.println("SHTFCK");
-
+        testManyBDDs(200, 13);
     }
+
+    public static void testManyBDDs(int count, int countOfVariables) {
+        long timeStarted = System.currentTimeMillis();
+        int countOfNodesBeforeReduce = 0;
+        int countOfRemovedNodes = 0;
+        for (int i = 0; i < count; i++) {
+            // generate binary function
+            String bf = generateBf(countOfVariables);
+
+            // create BDD
+            BDD bdd = new BDD();
+            bdd.BDD_create(bf);
+
+            countOfNodesBeforeReduce += bdd.countOfNodes;
+
+            // check if BDD is created good
+            if (!checkBf(bdd))
+                break;
+
+            // Reduce BDD
+            int reducedNodesCount;
+            if ((reducedNodesCount = bdd.reduce()) == -1)
+                System.out.println("Something went wrong with reducent");
+            else
+                countOfRemovedNodes += reducedNodesCount;
+
+            // check if BDD is reduced good
+            if (!checkBf(bdd))
+                break;
+            else System.out.println("OK");
+        }
+
+        long timeFinished = System.currentTimeMillis();
+        System.out.println(countOfNodesBeforeReduce + " nodes was created and " + countOfRemovedNodes + " nodes was removed");
+        double percentSuccess = (((double) countOfRemovedNodes / (double) countOfNodesBeforeReduce) * 100);
+        System.out.printf("%.2f%% of nodes was removed\n", percentSuccess);
+        System.out.println(count + " BDDs was tested in: " + (timeFinished - timeStarted) + " ms");
+        System.out.println(((timeFinished - timeStarted) / count) + "ms was average time for one test ");
+    }
+
 
     public static String generateBf(int countOfVariables) {
         StringBuilder generatedBf = new StringBuilder();
@@ -34,7 +52,6 @@ public class Main {
                 generatedBf.append("0");
             else generatedBf.append("1");
         }
-        System.out.println(generatedBf);
         return String.valueOf(generatedBf);
     }
 
@@ -50,6 +67,10 @@ public class Main {
             }
             generatedBf.append(bdd.BDD_use(String.valueOf(inputToUse)));
         }
-        return bdd.bf.equals(String.valueOf(generatedBf));
+
+        // Return true if check was success
+        boolean output = bdd.bf.equals(String.valueOf(generatedBf));
+        if (!output) System.out.println("PROBLEM with checking BDD by BF");
+        return output;
     }
 }

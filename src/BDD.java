@@ -11,7 +11,6 @@ public class BDD {
         root = root.insertToNode(bf);
         countOfNodes = root.size + 1;
         countOfVariables = log2(bf.length());
-        System.out.println("Pocet premennych:" + countOfVariables);
     }
 
     char BDD_use(String input) {
@@ -33,8 +32,9 @@ public class BDD {
     public int reduce() {
         if (root == null) return -1;
         int newCountOfNodes = 1;
+
         // Reduce all layers
-        for (int layer = 1; layer < root.depth; layer++) {
+        for (int layer = 1; layer <= root.depth; layer++) {
             ArrayList<Node> nodes = getNodesByDepth(root, layer, true);
             for (int i = 0; i < nodes.size(); i++) {
                 // Check if both nodes are same
@@ -63,8 +63,6 @@ public class BDD {
             ArrayList<Node> newNodesOnLayer = getNodesByDepth(root, layer - 1, false);
             newCountOfNodes += newNodesOnLayer.size();
         }
-        ArrayList<Node> newNodesOnLayer = getNodesByDepth(root, root.depth - 1, false);
-        newCountOfNodes += newNodesOnLayer.size();
 
         int countOfRemovedNodes = this.countOfNodes - newCountOfNodes;
         this.countOfNodes = newCountOfNodes;
