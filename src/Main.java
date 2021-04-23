@@ -39,10 +39,9 @@ public class Main {
         System.out.println(countOfNodesBeforeReduce + " nodes was created and " + countOfRemovedNodes + " nodes was removed");
         double percentSuccess = (((double) countOfRemovedNodes / (double) countOfNodesBeforeReduce) * 100);
         System.out.printf("%.2f%% of nodes was removed\n", percentSuccess);
-        System.out.println(count + " BDDs was tested in: " + (timeFinished - timeStarted) + " ms");
+        System.out.println(count + " BDDs with " + countOfVariables + " variables was tested in: " + (timeFinished - timeStarted) + " ms");
         System.out.println(((timeFinished - timeStarted) / count) + "ms was average time for one test ");
     }
-
 
     public static String generateBf(int countOfVariables) {
         StringBuilder generatedBf = new StringBuilder();

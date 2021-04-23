@@ -41,7 +41,7 @@ public class BDD {
                 if (nodes.get(i).left.value.equals(nodes.get(i).right.value)) {
                     nodes.get(i).right = nodes.get(i).left;
                 }
-                // Check nodes of this item with all others
+                // Check nodes of this item with all others {TODO Fucking time consumer}
                 for (int j = 1; i + j < nodes.size(); j++) {
                     // Compare left node with every other
                     if (nodes.get(i).left.value.equals(nodes.get(i + j).right.value)) {
