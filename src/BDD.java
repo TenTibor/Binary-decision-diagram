@@ -47,6 +47,7 @@ public class BDD {
                     Node nextNode = nodes.get(i + j);
                     String nextNodeLeftValue = nextNode.left.value;
                     String nextNodeRightValue = nextNode.right.value;
+
                     // Compare left node with every other
                     if (thisNodeLeftValue.equals(nextNodeRightValue)) {
                         nextNode.right = thisNode.left;

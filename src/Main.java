@@ -1,24 +1,21 @@
 public class Main {
 
     public static void main(String[] args) {
-        testManyBDDs(2000, 13);
-//
-//        BDD bdd = new BDD();
-//        bdd.BDD_create(generateBf(4));
-//        bdd.print();
-//        System.out.println(String.valueOf(bdd.reduce()));
-//        bdd.print();
+        // Parameter 1: how many test
+        // Parameter 2: how many variables
+        testManyBDDs(1, 13);
     }
 
     public static void testManyBDDs(int count, int countOfVariables) {
         long timeStarted = System.currentTimeMillis();
         int countOfNodesBeforeReduce = 0;
         int countOfRemovedNodes = 0;
+
         for (int i = 0; i < count; i++) {
             // generate binary function
             String bf = generateBf(countOfVariables);
 
-            // create BDD
+            // create new BDD
             BDD bdd = new BDD();
             bdd.BDD_create(bf);
 
@@ -28,17 +25,17 @@ public class Main {
             if (!checkBf(bdd))
                 break;
 
-            // Reduce BDD
+            // Reduce BDD and get count of reduced BDDs
             int reducedNodesCount;
             if ((reducedNodesCount = bdd.reduce()) == -1)
-                System.out.println("Something went wrong with reducent");
+                System.out.println("Something went wrong with reduce");
             else
                 countOfRemovedNodes += reducedNodesCount;
 
             // check if BDD is reduced good
             if (!checkBf(bdd))
                 break;
-            else System.out.println((i + 1) + ": OK");
+//            else System.out.println((i + 1) + ": OK");
         }
 
         long timeFinished = System.currentTimeMillis();
@@ -49,6 +46,7 @@ public class Main {
         System.out.println(((timeFinished - timeStarted) / count) + "ms was average time for one test ");
     }
 
+    // generate boolean function by count of variables
     public static String generateBf(int countOfVariables) {
         StringBuilder generatedBf = new StringBuilder();
         int countOfEndNodes = (int) Math.pow(2, countOfVariables);
@@ -60,6 +58,7 @@ public class Main {
         return String.valueOf(generatedBf);
     }
 
+    // check if BDD is created good. It compares all BDD_use with inputted boolean function
     public static boolean checkBf(BDD bdd) {
         StringBuilder generatedBf = new StringBuilder();
 
