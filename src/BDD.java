@@ -28,15 +28,19 @@ public class BDD {
 
         // navigate in BDD by array of chars
         Node actNode = root;
-        for (char c : inputs) {
-            if (c == '0')
-                actNode = actNode.left;
-            else if (c == '1')
-                actNode = actNode.right;
+        try {
+            for (char c : inputs) {
+                if (c == '0')
+                    actNode = actNode.left;
+                else if (c == '1')
+                    actNode = actNode.right;
+            }
+        } catch (NullPointerException e) {
+            // if route was bad return problem
+            return '-';
         }
 
-        // return result or "-" if result is not 0 or 1
-        return (actNode.value.equals("0") || actNode.value.equals("1")) ? actNode.value.charAt(0) : '-';
+        return actNode.value.charAt(0);
     }
 
     // reduce BDD and return count of removed nodes
