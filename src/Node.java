@@ -8,14 +8,18 @@ public class Node {
     public Node insertToNode(String bf) {
         Node newNode = new Node();
         newNode.value = bf;
+
+        // recursive function is calling while bf in function is longer than 0
         if (newNode.value.length() > 1) {
             String[] splittedPattern = splitText(newNode.value);
+
             newNode.left = insertToNode(splittedPattern[0]);
+            newNode.right = insertToNode(splittedPattern[1]);
+
+            // increase size of thisNode
             if (newNode.left != null) {
                 newNode.size += newNode.left.size + 1;
             }
-
-            newNode.right = insertToNode(splittedPattern[1]);
             if (newNode.right != null) {
                 newNode.size += newNode.right.size + 1;
             }

@@ -3,10 +3,11 @@ public class Main {
     public static void main(String[] args) {
         // Parameter 1: how many test
         // Parameter 2: how many variables
-        testManyBDDs(1, 13);
+        testManyBDDs(2000, 13);
     }
 
     public static void testManyBDDs(int count, int countOfVariables) {
+        System.out.print("Test started for " + count + " BDDs.");
         long timeStarted = System.currentTimeMillis();
         int countOfNodesBeforeReduce = 0;
         int countOfRemovedNodes = 0;
@@ -35,8 +36,14 @@ public class Main {
             // check if BDD is reduced good
             if (!checkBf(bdd))
                 break;
-//            else System.out.println((i + 1) + ": OK");
+            else {
+                // PASSED test
+                if ((i % 100) == 0) {
+                    System.out.print("\n");
+                } else System.out.print(".");
+            }
         }
+        System.out.print("\n");
 
         long timeFinished = System.currentTimeMillis();
         System.out.println(countOfNodesBeforeReduce + " nodes was created and " + countOfRemovedNodes + " nodes was removed");
