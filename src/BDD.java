@@ -4,20 +4,29 @@ public class BDD {
     Node root = new Node();
     int countOfVariables = 0;
     int countOfNodes = 0;
-    String bf;
+    String bf; // boolean function
 
     void BDD_create(String bf) {
         this.bf = bf;
+
+        // insert all nodes by boolean function
         root = root.insertToNode(bf);
+
+        // set count of nodes and variables
         countOfNodes = root.size + 1;
         countOfVariables = log2(bf.length());
     }
 
+    // use pattern to get result of boolean function
     char BDD_use(String input) {
+
+        // get string characters to array
         char[] inputs = new char[input.length()];
         for (int i = 0; i < input.length(); i++) {
             inputs[i] = input.charAt(i);
         }
+
+        // navigate in BDD by array of chars
         Node actNode = root;
         for (char c : inputs) {
             if (c == '0')
@@ -25,18 +34,24 @@ public class BDD {
             else if (c == '1')
                 actNode = actNode.right;
         }
+
+        // return result or "-" if result is not 0 or 1
         return (actNode.value.equals("0") || actNode.value.equals("1")) ? actNode.value.charAt(0) : '-';
     }
 
-
+    // reduce BDD and return count of removed nodes
     public int reduce() {
         if (root == null) return -1;
         int newCountOfNodes = 1;
 
-        // Reduce all layers
+        // Reduce all layers except root
         for (int layer = root.depth; layer > 0; layer--) {
+
+            // get all unique nodes in this layer
             ArrayList<Node> nodes = getNodesByDepth(root, layer, false);
             int sizeOfNodes = nodes.size();
+
+            // compare any child node with another child node
             for (int i = 0; i < sizeOfNodes; i++) {
                 Node thisNode = nodes.get(i);
                 String thisNodeLeftValue = thisNode.left.value;
@@ -65,10 +80,13 @@ public class BDD {
                     }
                 }
             }
+
+            // Check layer before this and get count of nodes after reduce
             ArrayList<Node> newNodesOnLayer = getNodesByDepth(root, layer - 1, false);
             newCountOfNodes += newNodesOnLayer.size();
         }
 
+        // calc removed nodes
         int countOfRemovedNodes = this.countOfNodes - newCountOfNodes;
         this.countOfNodes = newCountOfNodes;
         return countOfRemovedNodes;
@@ -86,13 +104,14 @@ public class BDD {
             // Append variables
             for (Node node : nodes) {
                 text.append(node.value).append(" ");
-//                text.append(node).append(" ");
             }
             System.out.println(text);
         }
         System.out.println("=======Pocet uzlov " + this.countOfNodes + "=======");
     }
 
+    // get on nodes in exact layer
+    // set duplicate to false for unique nodes
     ArrayList<Node> getNodesByDepth(Node node, int depth, boolean duplicates) {
         ArrayList<Node> nodes = new ArrayList<>();
         if (node == null) return nodes;
@@ -105,6 +124,7 @@ public class BDD {
         return duplicates ? nodes : removedDuplicates(nodes);
     }
 
+    // removed duplicate nodes in ArrayList<Node>
     private ArrayList<Node> removedDuplicates(ArrayList<Node> nodes) {
         ArrayList<Node> newNodes = new ArrayList<>();
         for (Node thisNode : nodes) {
@@ -113,6 +133,7 @@ public class BDD {
         return newNodes;
     }
 
+    // help function to calc log2
     public static int log2(int x) {
         return (int) (Math.log(x) / Math.log(2));
     }
