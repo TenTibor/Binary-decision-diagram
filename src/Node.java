@@ -24,12 +24,14 @@ public class Node {
                 newNode.size += newNode.right.size + 1;
             }
 
+            // recalculate depth
             if (newNode.right != null) newNode.depth += newNode.right.depth + 1;
             else if (newNode.left != null) newNode.depth += newNode.left.depth + 1;
         }
         return newNode;
     }
 
+    // spit text to two half
     private String[] splitText(String text) {
         int mid = text.length() / 2;
         return new String[]{text.substring(0, mid), text.substring(mid)};
