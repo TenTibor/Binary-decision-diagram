@@ -31,7 +31,7 @@ public class Node {
         return newNode;
     }
 
-    // spit text to two half
+    // split text into two half
     private String[] splitText(String text) {
         int mid = text.length() / 2;
         return new String[]{text.substring(0, mid), text.substring(mid)};
