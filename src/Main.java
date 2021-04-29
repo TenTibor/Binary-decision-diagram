@@ -3,11 +3,11 @@ public class Main {
     public static void main(String[] args) {
         // Parameter 1: how many test
         // Parameter 2: how many variables
-        testManyBDDs(200, 13);
+        testManyBDDs(2000, 14);
     }
 
     public static void testManyBDDs(int countOfTests, int countOfVariables) {
-        System.out.print("Test started for " + countOfTests + " BDDs.");
+        System.out.print("Test started for " + countOfTests + " BDDs " + "with " + countOfVariables + " variables");
         long timeStarted = System.currentTimeMillis();
 
         int countOfNodesBeforeReduce = 0;
@@ -16,7 +16,6 @@ public class Main {
         long totalTimeOfCrete = 0;
         long totalTimeOfUse = 0;
         long totalTimeOfReduce = 0;
-        long totalTimeOfUseAfterReduce = 0;
 
         for (int i = 0; i < countOfTests; i++) {
             // generate binary function
@@ -83,7 +82,11 @@ public class Main {
         System.out.println("> Total time for create: " + (totalTimeOfCrete) + " ms");
         System.out.println("> Total time for use: " + (totalTimeOfUse) + " ms");
         System.out.println("> Total time for reduce: " + (totalTimeOfReduce) + " ms");
+        System.out.println("-----------------------------");
         System.out.println("> Average time for test: " + ((timeFinished - timeStarted) / countOfTests) + " ms");
+        System.out.println("> Average time for create: " + (totalTimeOfCrete / countOfTests) + " ms");
+        System.out.println("> Average time for use: " + (totalTimeOfUse / countOfTests) + " ms");
+        System.out.println("> Average time for reduce: " + (totalTimeOfReduce / countOfTests) + " ms");
     }
 
     // generate boolean function by count of variables

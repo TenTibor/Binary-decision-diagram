@@ -36,7 +36,7 @@ public class BDD {
                     actNode = actNode.right;
             }
         } catch (NullPointerException e) {
-            // if route was bad return problem
+            // if route was bad return problem character
             return '-';
         }
 
@@ -90,7 +90,7 @@ public class BDD {
             newCountOfNodes += newNodesOnLayer.size();
         }
 
-        // calc removed nodes
+        // calc count of removed nodes
         int countOfRemovedNodes = this.countOfNodes - newCountOfNodes;
         this.countOfNodes = newCountOfNodes;
         return countOfRemovedNodes;
