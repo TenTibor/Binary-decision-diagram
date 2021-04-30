@@ -3,7 +3,7 @@ public class Main {
     public static void main(String[] args) {
         // Parameter 1: how many test
         // Parameter 2: how many variables
-        testManyBDDs(2000, 14);
+        testManyBDDs(2000, 13);
     }
 
     public static void testManyBDDs(int countOfTests, int countOfVariables) {
